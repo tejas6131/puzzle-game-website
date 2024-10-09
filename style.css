@@ -15,18 +15,15 @@ body {
     transform: scale(1.1); /* Slightly enlarge on hover */
 }
 
-
 #puzzle-container {
     display: flex; /* Use flexbox for layout */
     align-items: center; /* Center items vertically */
     justify-content: center; /* Center items horizontally */
-    width: 600px; /* Container size */
+    width: 720px; /* Container size */
     height: 600px; /* Container size */
-    /* margin: auto; */
     border: 2px solid #ccc;
     background-color: #fff;
 }
-
 
 #main-container {
     display: flex; /* Use flexbox for layout */
@@ -34,7 +31,6 @@ body {
     align-items: flex-start; /* Align items to the top */
     margin: auto;
 }
-
 
 #puzzle-image {
     position: relative;
@@ -48,8 +44,8 @@ body {
 
 #pieces-container {
     display: grid; /* Use grid layout for pieces */
-    grid-template-columns: repeat(4, 1fr); /* Two columns */
-    gap: 10px; /* Space between pieces */
+    grid-template-columns: repeat(4, 1fr); /* Four columns */
+    gap: 2px; /* Space between pieces */
     margin-left: 20px; /* Space between puzzle image and pieces */
 }
 
@@ -59,13 +55,13 @@ body {
     background-image: url('images/image1.jpg'); /* Placeholder */
     background-size: 400px 400px; /* Size of the original image */
     cursor: grab;
-    border: 0.2px solid #ccc; /* Optional: border around pieces */
+    border: 0.5px solid #ccc; /* Optional: border around pieces */
 }
 
 .drop-zone {
     width: 100px; /* Match this to puzzle-piece width */
     height: 100px; /* Match this to puzzle-piece height */
-    border: 0.1px dashed #ccc;
+    border: 0.2px dashed #ccc;
     display: inline-block; /* Align drop zones in a grid */
     position: relative;
 }
@@ -78,4 +74,67 @@ body {
 
 #puzzle-image.completed {
     border: none; /* Remove borders around completed puzzle */
+}
+
+.extra-slot {
+    width: 80px; /* Size of the slot */
+    height: 80px; /* Size of the slot */
+    border: 2px solid #007bff; /* Blue border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #e7f3ff; /* Light blue background */
+    display: flex; /* Flexbox to center text */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    margin-right: 10px; /* Space between the extra slot and the puzzle image */
+    font-weight: bold; /* Make the text bold */
+    color: #0056b3; /* Text color */
+}
+
+.drop-zone {
+    border: 1px dashed #aaa; /* Optional: Style for drop zones */
+    position: relative;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    #puzzle-container {
+        flex-direction: column; /* Stack containers vertically */
+        width: 100%; /* Full width */
+        height: auto; /* Auto height */
+    }
+
+    #puzzle-image, #pieces-container {
+        width: 100%; /* Full width for both elements */
+        height: auto; /* Auto height */
+    }
+
+    /* Stack pieces container below puzzle image */
+    #pieces-container {
+        grid-template-columns: repeat(2, 1fr); /* Two columns on smaller screens */
+        margin-left: 0; /* Remove left margin */
+        margin-top: 10px; /* Add top margin */
+    }
+
+    .puzzle-piece, .drop-zone, .extra-slot {
+        width: 80px; /* Reduce size for smaller screens */
+        height: 80px; /* Reduce size for smaller screens */
+    }
+
+    #message {
+        font-size: 18px; /* Slightly smaller message font */
+    }
+}
+
+@media (max-width: 480px) {
+    #pieces-container {
+        grid-template-columns: repeat(2, 1fr); /* Two columns on smaller screens */
+    }
+
+    #message {
+        font-size: 16px; /* Even smaller message font */
+    }
+
+    .image-options img {
+        width: 120px; /* Adjust image options size */
+    }
 }
