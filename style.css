@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #eaeaea;
+}
+
+.image-options img {
+    width: 150px; /* Adjust the width to your preference */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: add rounded corners */
+    transition: transform 0.2s; /* Optional: add a hover effect */
+}
+
+.image-options img:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+
+#puzzle-container {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    width: 600px; /* Container size */
+    height: 600px; /* Container size */
+    /* margin: auto; */
+    border: 2px solid #ccc;
+    background-color: #fff;
+}
+
+
+#main-container {
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center the containers */
+    align-items: flex-start; /* Align items to the top */
+    margin: auto;
+}
+
+
+#puzzle-image {
+    position: relative;
+    width: 500px; /* Image size */
+    height: 500px; /* Image size */
+    margin: 0 auto; /* Center the image horizontally */
+    display: flex; /* Flexbox for centering the drop zones */
+    flex-wrap: wrap; /* Allow wrapping of drop zones */
+    justify-content: center; /* Center drop zones in the container */
+}
+
+#pieces-container {
+    display: grid; /* Use grid layout for pieces */
+    grid-template-columns: repeat(4, 1fr); /* Two columns */
+    gap: 10px; /* Space between pieces */
+    margin-left: 20px; /* Space between puzzle image and pieces */
+}
+
+.puzzle-piece {
+    width: 100px; /* Size of each puzzle piece */
+    height: 100px; /* Size of each puzzle piece */
+    background-image: url('images/image1.jpg'); /* Placeholder */
+    background-size: 400px 400px; /* Size of the original image */
+    cursor: grab;
+    border: 0.2px solid #ccc; /* Optional: border around pieces */
+}
+
+.drop-zone {
+    width: 100px; /* Match this to puzzle-piece width */
+    height: 100px; /* Match this to puzzle-piece height */
+    border: 0.1px dashed #ccc;
+    display: inline-block; /* Align drop zones in a grid */
+    position: relative;
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 20px;
+    color: green;
+}
+
+#puzzle-image.completed {
+    border: none; /* Remove borders around completed puzzle */
+}
