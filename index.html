@@ -5,28 +5,233 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surprise Puzzle</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .hidden-symbol {
+            display: none; /* Initially hidden */
+        }
+
+        .completed {
+            position: relative;
+            display: inline-block; /* Allow the status to overlay the image */
+        }
+
+        .completed img {
+            filter: blur(0px); /* Slightly blur the completed image */
+            pointer-events: none; /* Prevent interaction with the image */
+        }
+
+        .completed .status-indicator {
+            position: absolute;
+            top: 0;
+            left: 50;
+            right: 0;
+            bottom: 0;
+            /* background-color: rgba(0, 255, 0, 0.5); */
+            color: rgb(0, 0, 0);
+            display: flex;
+            align-items: center;
+            /* justify-content: center; */
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .hidden-symbol {
+            display: block; /* Show the hidden symbol */
+            width: 180px; /* Adjust as needed */
+            height: 200px; /* Adjust as needed */
+            background-color:#989898; /* Placeholder for hidden symbol */
+            border-radius: 10px; /* Make it circular */
+        }
+    </style>
 </head>
 <body>
-    <!-- <h1>Happy Birthday!</h1> -->
-    <div class="image-options">
-        <a href="puzzle.html?img=image1"><img src="images/image1.jpg" alt="Option 1"></a>
-        <a href="puzzle.html?img=image2"><img src="images/image2.jpg" alt="Option 2"></a>
-        <a href="puzzle.html?img=image3"><img src="images/image3.jpg" alt="Option 3"></a>
-        <a href="puzzle.html?img=image4"><img src="images/image4.jpg" alt="Option 4"></a>
-        <a href="puzzle.html?img=image5"><img src="images/image5.jpg" alt="Option 5"></a>
-        <a href="puzzle.html?img=image6"><img src="images/image6.jpg" alt="Option 6"></a>
-        <a href="puzzle.html?img=image7"><img src="images/image7.jpg" alt="Option 7"></a>
-        <a href="puzzle.html?img=image8"><img src="images/image8.jpg" alt="Option 8"></a>
-        <a href="puzzle.html?img=image9"><img src="images/image9.jpg" alt="Option 9"></a>
-        <a href="puzzle.html?img=image10"><img src="images/image10.jpg" alt="Option 10"></a>
-        <a href="puzzle.html?img=image11"><img src="images/image11.jpg" alt="Option 11"></a>
-        <a href="puzzle.html?img=image12"><img src="images/image12.jpg" alt="Option 12"></a>
-        <a href="puzzle.html?img=image13"><img src="images/image13.jpg" alt="Option 13"></a>
-        <a href="puzzle.html?img=image14"><img src="images/image14.jpg" alt="Option 14"></a>
-        <a href="puzzle.html?img=image15"><img src="images/image15.jpg" alt="Option 15"></a>
-        <a href="puzzle.html?img=image16"><img src="images/image16.jpg" alt="Option 16"></a>
-        <a href="puzzle.html?img=image17"><img src="images/image17.jpg" alt="Option 17"></a>
+
+    <h1 class="IndexHeading">Welcome, Birthday Girl🥰<br>to the puzzle zone 🥸</h1>
+    <h1 class="IndexHeading">🥳 Tap on the Boxes to solve the puzzle and reveal the images 🥳</h1>
+
+    <div class="main-content">
+
+        <div class="image-options">
+            <a href="puzzle.html?img=image1">
+                <div class="completed" style="display: none;">
+                    <div class="status-indicator">Completed!</div>
+                    <img src="images/image1.jpg" alt="Option 1" class="puzzle-image" data-index="0">
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image2">
+                <div class="completed" style="display: none;">
+                    <img src="images/image2.jpg" alt="Option 2" class="puzzle-image" data-index="1">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image3">
+                <div class="completed" style="display: none;">
+                    <img src="images/image3.jpg" alt="Option 3" class="puzzle-image" data-index="2">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image4">
+                <div class="completed" style="display: none;">
+                    <img src="images/image4.jpg" alt="Option 4" class="puzzle-image" data-index="3">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image5">
+                <div class="completed" style="display: none;">
+                    <img src="images/image5.jpg" alt="Option 5" class="puzzle-image" data-index="4">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image6">
+                <div class="completed" style="display: none;">
+                    <img src="images/image6.jpg" alt="Option 6" class="puzzle-image" data-index="5">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image7">
+                <div class="completed" style="display: none;">
+                    <img src="images/image7.jpg" alt="Option 7" class="puzzle-image" data-index="6">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image8">
+                <div class="completed" style="display: none;">
+                    <img src="images/image8.jpg" alt="Option 8" class="puzzle-image" data-index="7">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image9">
+                <div class="completed" style="display: none;">
+                    <img src="images/image9.jpg" alt="Option 9" class="puzzle-image" data-index="8">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image10">
+                <div class="completed" style="display: none;">
+                    <img src="images/image10.jpg" alt="Option 10" class="puzzle-image" data-index="9">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image11">
+                <div class="completed" style="display: none;">
+                    <img src="images/image11.jpg" alt="Option 11" class="puzzle-image" data-index="10">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image12">
+                <div class="completed" style="display: none;">
+                    <img src="images/image12.jpg" alt="Option 12" class="puzzle-image" data-index="11">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image13">
+                <div class="completed" style="display: none;">
+                    <img src="images/image13.jpg" alt="Option 13" class="puzzle-image" data-index="12">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image14">
+                <div class="completed" style="display: none;">
+                    <img src="images/image14.jpg" alt="Option 14" class="puzzle-image" data-index="13">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image15">
+                <div class="completed" style="display: none;">
+                    <img src="images/image15.jpg" alt="Option 15" class="puzzle-image" data-index="14">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image16">
+                <div class="completed" style="display: none;">
+                    <img src="images/image16.jpg" alt="Option 16" class="puzzle-image" data-index="15">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image17">
+                <div class="completed" style="display: none;">
+                    <img src="images/image17.jpg" alt="Option 17" class="puzzle-image" data-index="16">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image18">
+                <div class="completed" style="display: none;">
+                    <img src="images/image18.jpg" alt="Option 18" class="puzzle-image" data-index="17">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image19">
+                <div class="completed" style="display: none;">
+                    <img src="images/image19.jpg" alt="Option 19" class="puzzle-image" data-index="18">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image20">
+                <div class="completed" style="display: none;">
+                    <img src="images/image20.jpg" alt="Option 20" class="puzzle-image" data-index="19">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image21">
+                <div class="completed" style="display: none;">
+                    <img src="images/image21.jpg" alt="Option 21" class="puzzle-image" data-index="20">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image22">
+                <div class="completed" style="display: none;">
+                    <img src="images/image22.jpg" alt="Option 22" class="puzzle-image" data-index="21">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image23">
+                <div class="completed" style="display: none;">
+                    <img src="images/image23.jpg" alt="Option 23" class="puzzle-image" data-index="22">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <a href="puzzle.html?img=image24">
+                <div class="completed" style="display: none;">
+                    <img src="images/image24.jpg" alt="Option 24" class="puzzle-image" data-index="23">
+                    <div class="status-indicator">Completed!</div>
+                </div>
+                <div class="hidden-symbol" style="display: block;"></div>
+            </a>
+            <div class="gift-box1" onclick="alert('First solve all the puzzles.... Ali mothi gift kholaila 😂🤣 ')"></div>
+
+
+        </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    checkAllPuzzlesSolved(); // Call the function when the index page loads
+});
+
+    </script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -7,9 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Complete the Puzzle!</h1>
+    <h1 class="IndexHeading">Complete the Puzzle!</h1>
+    <h3 class="IndexHeading">Drag the image peices from the right side and drop them in the container to the left side 👍</h3>
     
     <div id="main-container"> <!-- Added parent container -->
+        <div class="reference-image-container">
+            <h3>Reference Image</h3>
+            <img id="reference-image" src="" alt="Reference" />
+        </div>
+        
         <div id="puzzle-container">
             <div id="puzzle-image"></div>
         </div>
