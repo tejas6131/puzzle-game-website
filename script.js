@@ -9,9 +9,9 @@ const puzzleImageDiv = document.getElementById('puzzle-image');
 const referenceImage = document.getElementById('referenceImage');
 
 // Grid dimensions
-const gridSize = 6; // Adjust as needed (e.g., 2 for a 2x2 puzzle)
+const gridSize = 2; // Adjust as needed (e.g., 2 for a 2x2 puzzle)
 const totalPieces = gridSize * gridSize; // Total number of pieces
-const pieceSize = 80; // Size of each piece (width and height)
+const pieceSize = 200; // Size of each piece (width and height)
 
 // Shuffle array
 function shuffleArray(array) {
