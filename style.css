@@ -1,3 +1,49 @@
+
+/* Basic styling for the page */
+homeBody {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+/* Container to center the boxes */
+.containerHome {
+    margin-top: 10%;
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between boxes */
+}
+
+/* Box styling */
+.boxHome {
+    width: 350px;
+    height: 350px;
+    background-color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border-radius: 10px; /* Optional rounded corners */
+}
+
+/* Hover effect */
+.boxHome:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    background-color: #b0c4de; /* Optional background color change */
+}
+
+
+
+
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -454,40 +500,3 @@ button:hover {
         width: 120px; /* Adjust image options size */
     }
 }
-
-
-
-/* .popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-}
-
-.popup-content {
-    text-align: center;
-}
-
-.popup button {
-    margin-top: 10px;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 200%;
-    height: 200%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    display: none;
-}
- */

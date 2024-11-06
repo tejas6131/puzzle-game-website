@@ -1,7 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const selectedImage = urlParams.get('img');
-
-const imagePath = `images/${selectedImage}.jpg`;
+const selectedType = urlParams.get('type');
+const imagePath = `images/${selectedType}/${selectedImage}.jpg`;
 
 // Puzzle setup
 const piecesContainer = document.getElementById('pieces-container');
@@ -9,9 +9,9 @@ const puzzleImageDiv = document.getElementById('puzzle-image');
 const referenceImage = document.getElementById('referenceImage');
 
 // Grid dimensions
-const gridSize = 6; // Adjust as needed (e.g., 2 for a 2x2 puzzle)
+const gridSize = 1; // Adjust as needed (e.g., 2 for a 2x2 puzzle)
 const totalPieces = gridSize * gridSize; // Total number of pieces
-const pieceSize = 80; // Size of each piece (width and height)
+const pieceSize = 400; // Size of each piece (width and height)
 
 // Shuffle array
 function shuffleArray(array) {
@@ -25,13 +25,20 @@ function shuffleArray(array) {
 
 // Load completion status from localStorage when the page loads
 document.addEventListener("DOMContentLoaded", () => {
-    for (let i = 1; i <= 24; i++) {
-        const puzzleKey = `image${i}-completed`;
+    for (let i = 1; i <= 10; i++) {
+        const puzzleKey = `${selectedType}-image${i}-completed`;
         const completed = localStorage.getItem(puzzleKey);
 
+
         if (completed) {
-            const completedDiv = document.querySelector(`a[href="puzzle.html?img=image${i}"] .completed`);
-            const hiddenSymbol = document.querySelector(`a[href="puzzle.html?img=image${i}"] .hidden-symbol`);
+            const completedDiv = document.querySelector(`a[href="puzzle.html?img=image${i}&type=${selectedType}"] .completed`);
+            const hiddenSymbol = document.querySelector(`a[href="puzzle.html?img=image${i}&type=${selectedType}"] .hidden-symbol`);
+             
+            console.log(completedDiv);
+            console.log(hiddenSymbol);
+
+
+
             if (completedDiv && hiddenSymbol) {
                 completedDiv.style.display = 'block'; // Show the completed indicator
                 hiddenSymbol.style.display = 'none'; // Hide the hidden symbol
@@ -99,7 +106,6 @@ function checkPuzzleCompletion() {
 
 
 
-
 // Show celebration message
 // Show celebration message and store completion
 function showCelebration() {
@@ -123,15 +129,53 @@ function showCelebration() {
     }, 3000);
 
     // Store completion status in localStorage
+    const puzzleType = selectedType; // Use the selected type (e.g., 'animals')
+    
     const puzzleName = selectedImage; // Use the selected image name as the puzzle identifier
-    localStorage.setItem(`${puzzleName}-completed`, 'true'); // Set completion status
+    const completionKey = `${puzzleType}-${puzzleName}-completed`; // Unique key with type and image
+    
+    localStorage.setItem(completionKey, 'true'); // Set completion status
+    console.log(`LocalStorage updated: ${completionKey} = true`); 
 
-    const completedDiv = document.querySelector(`a[href="puzzle.html?img=${selectedImage}"] .completed`);
-    const hiddenSymbol = document.querySelector(`a[href="puzzle.html?img=${selectedImage}"] .hidden-symbol`);
+
+    const completedDiv = document.querySelector(`a[href="puzzle.html?img=${selectedImage}&type=${selectedType}"] .completed`);
+    const hiddenSymbol = document.querySelector(`a[href="puzzle.html?img=${selectedImage}&type=${selectedType}"] .hidden-symbol`);
+
+
+
+
+
+    console.log('Completed Div:', completedDiv);
+    console.log('Hidden Symbol:', hiddenSymbol);
+
+
+
+
     if (completedDiv && hiddenSymbol) {
         completedDiv.style.display = 'block'; // Show the completed indicator
         hiddenSymbol.style.display = 'none'; // Hide the hidden symbol
     }
+
+    // Create and display the completed image
+    const completedImage = document.createElement('img');
+    completedImage.src = imagePath; // Use the same path as the puzzle pieces
+    completedImage.alt = "Completed Puzzle";
+    completedImage.style.position = 'fixed';
+    completedImage.style.top = '50%';
+    completedImage.style.left = '50%';
+    completedImage.style.transform = 'translate(-50%, -50%)';
+    completedImage.style.maxWidth = '90%'; // Responsive size
+    completedImage.style.maxHeight = '90%';
+    completedImage.style.zIndex = '1000';
+    completedImage.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
+
+    document.body.appendChild(completedImage);
+
+
+    // Remove the completed image after a few seconds
+    setTimeout(() => {
+        completedImage.remove();
+    }, 3000);
 
 }
 
@@ -263,28 +307,89 @@ function addTouchListeners() {
     });
 }
 
-
-
 function checkAllPuzzlesSolved() {
-    // console.log("Iam Running");
-    let allSolved = true;
-    for (let i = 1; i <= 24; i++) {
-        console.log("Running");
-        if (!localStorage.getItem(`image${i}-completed`)) {
-            allSolved = false;
-            break;
-        }
-    }
+    // Check completion status for each puzzle option
+    const imageOptions = document.querySelectorAll('.image-options a');
 
-    if (allSolved) {
-        const mainContent = document.querySelector('.main-content'); // Use a specific container
-        mainContent.classList.add('fade-out'); // Apply fade-out only to the main content
-        
-        // document.body.classList.add('fade-out');
-        setTimeout(displayGiftBox, 1000);
-        // console.log("Complete");
-    }
+    imageOptions.forEach(option => {
+        const img = option.querySelector('.puzzle-image');
+        const imgSrc = img.src; // Get the source of the image
+        const imgName = imgSrc.split('/').pop().split('.')[0]; // Get the image name without extension
+        const puzzleType = option.href.split('=')[1]; // Get puzzle type from URL
+
+        // Check if the puzzle is completed in localStorage
+        const completionKey = `${puzzleType}-${imgName}-completed`;
+        if (localStorage.getItem(completionKey) === 'true') {
+            const completedDiv = option.querySelector('.completed');
+            const hiddenSymbol = option.querySelector('.hidden-symbol');
+
+            // Show the completed indicator
+            completedDiv.style.display = 'inline-block'; 
+            hiddenSymbol.style.display = 'none'; // Hide the hidden symbol
+        }
+    });
 }
+
+
+// function checkAllPuzzlesSolved() {
+//     const types = ["animals", "cars", "landscapes"]; // List all puzzle types
+//     let allSolved = true;
+
+//     // Loop through each type and each image within that type
+//     types.forEach((type) => {
+//         for (let i = 1; i <= 10; i++) {
+//             const completionKey = `${type}-image${i}-completed`; // Unique key with type and image
+//             console.log(`Checking: ${completionKey}`);
+            
+//             // If any puzzle is not completed, set allSolved to false and break out of loops
+//             if (!localStorage.getItem(completionKey)) {
+//                 allSolved = false;
+//                 break;
+//             }
+//         }
+        
+//         // Exit if any unsolved puzzle found
+//         if (!allSolved) {
+//             return;
+//         }
+//     });
+
+//     // If all puzzles across all types are solved, trigger the celebration
+//     if (allSolved) {
+//         const mainContent = document.querySelector('.main-content'); // Use a specific container
+//         mainContent.classList.add('fade-out'); // Apply fade-out only to the main content
+
+//         setTimeout(displayGiftBox, 1000); // Display the gift box after fade-out
+//         console.log("All puzzles completed!");
+//     }
+// }
+
+
+
+
+
+
+
+// function checkAllPuzzlesSolved() {
+//     // console.log("Iam Running");
+//     let allSolved = true;
+//     for (let i = 1; i <= 10; i++) {
+//         console.log("Running");
+//         if (!localStorage.getItem(`image${i}-completed`)) {
+//             allSolved = false;
+//             break;
+//         }
+//     }
+
+//     if (allSolved) {
+//         const mainContent = document.querySelector('.main-content'); // Use a specific container
+//         mainContent.classList.add('fade-out'); // Apply fade-out only to the main content
+        
+//         // document.body.classList.add('fade-out');
+//         setTimeout(displayGiftBox, 1000);
+//         // console.log("Complete");
+//     }
+// }
 
 function displayGiftBox() {
     const giftBox = document.createElement('div');
@@ -326,50 +431,12 @@ function createConfetti() {
 
 
 
-
 function displayLetter() {
     const letter = document.createElement('div');
     letter.className = 'letter';
-    const message = `Hello maziii Birthday Girl…….
-I hope your day is spent well. And yes,, Congratulations on solving all the puzzles correctly 😂😂<br>
-Okay now coming to the point…..<br>
-Happy to you to yoouuuuuuuuuuuuuu…..<br>
-Happy to you to yoouuuuuuuuuuuuuu…..<br>
-Aaaaayyyyyyyyyyy..<br>
-Happy to you to yoouuuuuuuuuuuuuu…..<br>
-Mazyaaa thabduuuu cha birthday hayeeeee🥳🥳<br>
-<br>
-Dear Dabdu, I hope this letter finds you well , I am writing on behalf of myself 🤣🤣<br>
-<br>
-Bokya dodkyaa…<br>
-How’s the gift???🎁<br>
-<br>
-Chalo lets come to the point...<br>
-I was wandering since a long time ki kay karu kay karu.. and then finally I thought ki je yetai te karuya ki…..<br>
-Mg I thought a lot and came up with this idea…<br>
-I have worked a lottt on this ok …<br>
-So mg avadla nasla tari pn avadla mhanaicha🙃<br>
-<br>
-Well the complete motto behind this gift ,,,, is this particular letter…….<br>
-This is not just a letter……<br>
-But….<br>
-Ig someone wanted a unique proposal 🤷‍♂️🤷‍♂️<br>
-<br>
-<br>
-So here we go…….<br>
-<br>
-This was just a gift to grab your attention….<br>
-Its been a long time since I have been planning to tell you this…<br>
-You mean the world to me…. And there is nothing that can replace the feelings that I have for you…. I love you to the moon and back…<br>
-All the moments that we have spent together were the best moments in my life….<br>
-Well as you already know I’m not that good in this all (writing stuff)…<br>
-But still finally I would like to ask you the actual traditional question that you always expect me asking ……….<br><br><br>
-Miss Pranjali Pandharinath Patil….<br><br>
-Will you Marry me ???
-<br><br>
-<button class="yes-button">YES</button>
-<button class="no-button">NO </button>
-`
+    const message = `Congratulations.... You have solved all the puzzles 🥳🥳
+    <br><br>
+<button class="yes-button">Celebrate</button>`
     letter.innerHTML =message;
     document.body.appendChild(letter);
 
@@ -388,6 +455,13 @@ Will you Marry me ???
     });
 
 }
+
+function navigateTo(page) {
+    window.location.href = page;
+}
+
+
+
 
 
 
