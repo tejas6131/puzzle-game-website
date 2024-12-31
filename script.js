@@ -1,6 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const selectedImage = urlParams.get('img');
 const selectedType = urlParams.get('type');
+// console.log("SelectedType "+ selectedType);
 const imagePath = `images/${selectedType}/${selectedImage}.jpg`;
 
 // Puzzle setup
@@ -9,9 +10,9 @@ const puzzleImageDiv = document.getElementById('puzzle-image');
 const referenceImage = document.getElementById('referenceImage');
 
 // Grid dimensions
-const gridSize = 1; // Adjust as needed (e.g., 2 for a 2x2 puzzle)
+const gridSize = 6; // Adjust as needed (e.g., 2 for a 2x2 puzzle)
 const totalPieces = gridSize * gridSize; // Total number of pieces
-const pieceSize = 400; // Size of each piece (width and height)
+const pieceSize = 80; // Size of each piece (width and height)
 
 // Shuffle array
 function shuffleArray(array) {
@@ -27,6 +28,7 @@ function shuffleArray(array) {
 document.addEventListener("DOMContentLoaded", () => {
     for (let i = 1; i <= 10; i++) {
         const puzzleKey = `${selectedType}-image${i}-completed`;
+
         const completed = localStorage.getItem(puzzleKey);
 
 
@@ -34,12 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const completedDiv = document.querySelector(`a[href="puzzle.html?img=image${i}&type=${selectedType}"] .completed`);
             const hiddenSymbol = document.querySelector(`a[href="puzzle.html?img=image${i}&type=${selectedType}"] .hidden-symbol`);
              
-            console.log(completedDiv);
-            console.log(hiddenSymbol);
-
-
 
             if (completedDiv && hiddenSymbol) {
+                // console.log("Done");
                 completedDiv.style.display = 'block'; // Show the completed indicator
                 hiddenSymbol.style.display = 'none'; // Hide the hidden symbol
             }
@@ -136,18 +135,10 @@ function showCelebration() {
     
     localStorage.setItem(completionKey, 'true'); // Set completion status
     console.log(`LocalStorage updated: ${completionKey} = true`); 
-
+    
 
     const completedDiv = document.querySelector(`a[href="puzzle.html?img=${selectedImage}&type=${selectedType}"] .completed`);
     const hiddenSymbol = document.querySelector(`a[href="puzzle.html?img=${selectedImage}&type=${selectedType}"] .hidden-symbol`);
-
-
-
-
-
-    console.log('Completed Div:', completedDiv);
-    console.log('Hidden Symbol:', hiddenSymbol);
-
 
 
 
@@ -307,62 +298,91 @@ function addTouchListeners() {
     });
 }
 
+// function checkAllPuzzlesSolved() {
+//     // Check completion status for each puzzle option
+//     const imageOptions = document.querySelectorAll('.image-options a');
+
+//     imageOptions.forEach(option => {
+//         const img = option.querySelector('.puzzle-image');
+//         const imgSrc = img.src; // Get the source of the image
+//         const imgName = imgSrc.split('/').pop().split('.')[0]; // Get the image name without extension
+//         const puzzleType = option.href.split('=')[1]; // Get puzzle type from URL
+
+//         // Check if the puzzle is completed in localStorage
+//         const completionKey = `${puzzleType}-${imgName}-completed`;
+//         console.log("Completion key : "+completionKey);
+//         if (localStorage.getItem(completionKey) === 'true') {
+//             const completedDiv = option.querySelector('.completed');
+//             const hiddenSymbol = option.querySelector('.hidden-symbol');
+
+//             // Show the completed indicator
+//             completedDiv.style.display = 'inline-block'; 
+//             hiddenSymbol.style.display = 'none'; // Hide the hidden symbol
+//         }
+//     });
+// }
+
+
+// 
+
+
+
 function checkAllPuzzlesSolved() {
-    // Check completion status for each puzzle option
-    const imageOptions = document.querySelectorAll('.image-options a');
+    const currentType = new URLSearchParams(window.location.search).get('type'); // Get the current type from the URL
+    const totalPuzzlesPerType = 10; // Total number of puzzles per type
+    let allSolvedForType = true; // Assume all puzzles of the current type are solved
 
-    imageOptions.forEach(option => {
-        const img = option.querySelector('.puzzle-image');
-        const imgSrc = img.src; // Get the source of the image
-        const imgName = imgSrc.split('/').pop().split('.')[0]; // Get the image name without extension
-        const puzzleType = option.href.split('=')[1]; // Get puzzle type from URL
+    // Check completion status for all puzzles of the current type
+    for (let i = 1; i <= totalPuzzlesPerType; i++) {
+        const completionKey = `${currentType}-image${i}-completed`; // Unique key for each puzzle
+        console.log(`Checking: ${completionKey}`);
 
-        // Check if the puzzle is completed in localStorage
-        const completionKey = `${puzzleType}-${imgName}-completed`;
-        if (localStorage.getItem(completionKey) === 'true') {
-            const completedDiv = option.querySelector('.completed');
-            const hiddenSymbol = option.querySelector('.hidden-symbol');
-
-            // Show the completed indicator
-            completedDiv.style.display = 'inline-block'; 
-            hiddenSymbol.style.display = 'none'; // Hide the hidden symbol
+        // If any puzzle is not completed for this type, set flag to false
+        if (!localStorage.getItem(completionKey)) {
+            allSolvedForType = false;
+            break;
         }
+    }
+
+    // If all puzzles for the current type are solved, display the gift box
+    if (allSolvedForType) {
+        triggerGiftBoxForType(currentType);
+    }
+}
+
+// Function to handle gift box display for a specific type
+function triggerGiftBoxForType(type) {
+    const mainContent = document.querySelector('.main-content'); // Use a specific container
+    const typeMessage = document.createElement('div'); // Create a message element
+
+    // Customize the message for the puzzle type
+    typeMessage.textContent = `Congratulations! All ${type} puzzles are completed! 🎉`;
+    typeMessage.classList.add('type-completion-message'); // Add a class for styling
+    document.body.appendChild(typeMessage); // Append the message to the body
+
+    // Apply fade-out effect to the main content
+    mainContent.classList.add('fade-out');
+
+    // Display the gift box after fade-out
+    setTimeout(() => {
+        displayGiftBox(type); // Pass the type to displayGiftBox for customization
+        typeMessage.remove(); // Remove the message after the gift box is displayed
+    }, 1000);
+}
+
+// Function to display the gift box for a specific type
+function displayGiftBox(type) {
+    const giftBox = document.createElement('div');
+    giftBox.textContent = `🎁 Gift for completing all ${type} puzzles!`;
+    giftBox.classList.add('gift-box'); // Add a class for styling
+    document.body.appendChild(giftBox);
+
+    // Optionally, add a click-to-dismiss functionality
+    giftBox.addEventListener('click', () => {
+        giftBox.remove();
     });
 }
 
-
-// function checkAllPuzzlesSolved() {
-//     const types = ["animals", "cars", "landscapes"]; // List all puzzle types
-//     let allSolved = true;
-
-//     // Loop through each type and each image within that type
-//     types.forEach((type) => {
-//         for (let i = 1; i <= 10; i++) {
-//             const completionKey = `${type}-image${i}-completed`; // Unique key with type and image
-//             console.log(`Checking: ${completionKey}`);
-            
-//             // If any puzzle is not completed, set allSolved to false and break out of loops
-//             if (!localStorage.getItem(completionKey)) {
-//                 allSolved = false;
-//                 break;
-//             }
-//         }
-        
-//         // Exit if any unsolved puzzle found
-//         if (!allSolved) {
-//             return;
-//         }
-//     });
-
-//     // If all puzzles across all types are solved, trigger the celebration
-//     if (allSolved) {
-//         const mainContent = document.querySelector('.main-content'); // Use a specific container
-//         mainContent.classList.add('fade-out'); // Apply fade-out only to the main content
-
-//         setTimeout(displayGiftBox, 1000); // Display the gift box after fade-out
-//         console.log("All puzzles completed!");
-//     }
-// }
 
 
 
